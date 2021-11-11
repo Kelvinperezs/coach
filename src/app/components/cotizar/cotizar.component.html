@@ -1,0 +1,401 @@
+<!-- FORM DATA AUTO-->
+<section class="datos">
+  <div class="container">
+    <div class="datos-box">
+      <div class="datos-box-ingreso">
+        <h2>Ingresa los datos de tu vehículo</h2>
+        <div class="datos-box-ingreso__patente">
+          <div class="patente-box">
+            <label for="patenteAsegurado">Ingresa tu patente</label>
+            <div class="form-group form-patente">
+              <input
+                [(ngModel)]="formCotizar.patente"
+                class="form-control input-patente"
+                id="patenteAsegurado"
+                name="patenteAsegurado"
+                type="text"
+                autocomplete="off"
+                placeholder="ABCD 12"
+                [mask]="maskPatente"
+                required
+              />
+            </div>
+          </div>
+          <div class="patente-check-box">
+            <input
+              [(ngModel)]="formCotizar.vehiculoNuevo"
+              class="regular-checkbox"
+              id="nuevoVehiculo"
+              type="checkbox"
+              name="nuevoVehiculo"
+            />
+            <label class="regular-checkbox-label" for="nuevoVehiculo"></label>
+            <label class="label-checkbox" for="nuevoVehiculo"
+              >El vehículo es nuevo, aún no tiene patente</label
+            ><a
+              class="icon-help"
+              data-toggle="tooltip"
+              data-original-title="Aquí va un texto"
+              ><img
+                src="../../../../assets/img/sura-icon-help.svg"
+                alt="SURA ICON HELP"
+            /></a>
+          </div>
+        </div>
+        <div class="datos-box-ingreso__auto">
+          <!-- <div class="form-group">
+              <div class="datos-box-ingreso-select custom-select">
+                <label for="marca">Marca*</label>
+                <select class="form-select"  id="marca" [(ngModel)]="formCotizar.marca" (change)="onChangeMarca()">
+                  <option [value]="null">Seleccione Marca...</option>
+                  <option *ngFor="let marca of marcas" [ngValue]="marca.codigo">
+                    {{ marca.nombre }}
+                  </option>
+                </select>
+              </div>
+            </div> -->
+
+          <div class="form-group">
+            <label for="marca">Marca*</label>
+            <div>
+              <ng-select
+                style="width: 85%"
+                [(ngModel)]="formCotizar.marca"
+                class="customized"
+                id="marca"
+                [clearable]="false"
+                [searchable]="false"
+                placeholder="Seleccione Marca..."
+                (change)="onChangeMarca()"
+              >
+                <!-- <ng-option [value]="null">Seleccione Marca...</ng-option> -->
+                <ng-option *ngFor="let marca of marcas" [value]="marca.codigo">
+                  {{ marca.nombre | uppercase }}
+                </ng-option>
+              </ng-select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="marca">Modelo*</label>
+            <div>
+              <ng-select
+                style="width: 85%"
+                [(ngModel)]="formCotizar.modelo"
+                class="customized"
+                id="modelo"
+                [clearable]="false"
+                [searchable]="false"
+                placeholder="Seleccione Modelo..."
+              >
+                <!-- <option [value]="null">Seleccione Modelo...</option> -->
+                <ng-option
+                  *ngFor="let modelo of modelos"
+                  [value]="modelo.codigo"
+                >
+                  {{ modelo.nombre | uppercase }}
+                </ng-option>
+              </ng-select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="anio">Año*</label>
+            <div>
+              <ng-select
+                style="width: 85%"
+                [(ngModel)]="formCotizar.anio"
+                class="customized"
+                id="anio"
+                [clearable]="false"
+                [searchable]="false"
+                placeholder="Seleccione Año..."
+              >
+                <!-- <option [value]="null">Seleccione Año...</option> -->
+                <ng-option *ngFor="let anio of aniosList" [value]="anio.codigo">
+                  {{ anio.description }}
+                </ng-option>
+              </ng-select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="datos-box-asegurado">
+        <div class="asegurado-item">
+          <img
+            src="../../../../assets/img/sura-icon-user.svg"
+            alt="SURA ICON USER"
+          />
+          <div class="asegurado-item__data">
+            <p>
+              <strong>Nombre:</strong><strong id="name">{{ name }}</strong>
+            </p>
+            <p>
+              <strong>Rut:</strong><strong id="rut">{{ rut }}-{{ dv }}</strong>
+            </p>
+            <p>
+              Teléfono:<span id="celular">{{ phone }}</span>
+            </p>
+            <p>
+              Email:<span id="email">{{ mail }}</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- <app-datos-auto 
+    [marcas]    = "marcas"
+    [modelos]   = "modelos"
+    [aniosList] = "aniosList"
+    (changeMarca) = changeMarca($event)
+></app-datos-auto> -->
+<!-- <app-variables-auto></app-variables-auto> -->
+<!--FORM DATA VARIABLES AUTO-->
+<section class="toggle-box">
+  <div class="container bg-img">
+    <div class="toggle-box-container">
+      <div class="form-group form-group-coberturas">
+        <label class="form-label" for="edadConductor"
+          >¿Este vehículo es manejado por menores de 30 años?</label
+        >
+        <div class="toggle">
+          <input
+            [(ngModel)]="formCotizar.edadConductor"
+            class="toggle-input"
+            id="edadConductorNo"
+            name="edadConductor"
+            value="no"
+            type="radio"
+            [checked]="formCotizar.edadConductor === 'no'"
+          />
+          <label class="toggle-label" for="edadConductorNo">No</label>
+          <input
+            [(ngModel)]="formCotizar.edadConductor"
+            class="toggle-input"
+            id="edadConductorSi"
+            name="edadConductor"
+            value="si"
+            type="radio"
+            [checked]="formCotizar.edadConductor === 'si'"
+          />
+          <label class="toggle-label" for="edadConductorSi">Si</label
+          ><span class="toggle-outside"></span
+          ><span class="toggle-inside"></span>
+        </div>
+      </div>
+      <div class="form-group form-group-coberturas">
+        <label class="form-label" for="usoVehiculo"
+          >¿Este vehículo es solo de uso particular?</label
+        >
+        <div class="toggle">
+          <input
+            class="toggle-input"
+            id="usoVehiculoNo"
+            name="usoVehiculo"
+            value="no"
+            type="radio"
+            [checked]="formCotizar.usoVehiculo === 'no'"
+          />
+          <label class="toggle-label" for="usoVehiculoNo">No</label>
+          <input
+            class="toggle-input"
+            id="usoVehiculoSi"
+            name="usoVehiculo"
+            value="si"
+            type="radio"
+            [checked]="formCotizar.usoVehiculo === 'si'"
+          />
+          <label class="toggle-label" for="usoVehiculoSi">Si</label
+          ><span class="toggle-outside"></span
+          ><span class="toggle-inside"></span>
+        </div>
+      </div>
+      <div class="form-group form-group-coberturas">
+        <label class="form-label" for="propietarioVehiculo"
+          >¿Eres propietario del vehículo?</label
+        >
+        <div class="toggle">
+          <input
+            class="toggle-input"
+            id="propietarioVehiculoNo"
+            name="propietarioVehiculo"
+            value="no"
+            type="radio"
+            [checked]="formCotizar.propietarioVehiculo === 'no'"
+          />
+          <label class="toggle-label" for="propietarioVehiculoNo">No</label>
+          <input
+            class="toggle-input"
+            id="propietarioVehiculoSi"
+            name="propietarioVehiculo"
+            value="si"
+            type="radio"
+            [checked]="formCotizar.propietarioVehiculo === 'si'"
+          />
+          <label class="toggle-label" for="propietarioVehiculoSi">Si</label
+          ><span class="toggle-outside"></span
+          ><span class="toggle-inside"></span>
+        </div>
+      </div>
+      <hr />
+      <div class="switch-container">
+        <div class="switch-item">
+          <label class="switch-item__title"
+            ><strong
+              >¿Cuántos kilómetros aproximados conduces al mes?</strong
+            ></label
+          >
+          <div class="switch switch-3">
+            <input
+              class="switch-input"
+              id="kmMes001"
+              name="kmMes00"
+              value="1"
+              type="radio"
+              [(ngModel)]="formCotizar.kilomentrosMes"
+              [checked]="formCotizar.kilomentrosMes === '1'"
+            />
+            <label class="switch-label" for="kmMes001">MENOS DE 300 KM</label>
+            <input
+              class="switch-input"
+              id="kmMes002"
+              name="kmMes00"
+              value="2"
+              type="radio"
+              [(ngModel)]="formCotizar.kilomentrosMes"
+              [checked]="formCotizar.kilomentrosMes === '2'"
+            />
+            <label class="switch-label" for="kmMes002">MÁS DE 300 KM</label>
+            <input
+              class="switch-input"
+              id="kmMes003"
+              name="kmMes00"
+              value="3"
+              type="radio"
+              [(ngModel)]="formCotizar.kilomentrosMes"
+              [checked]="formCotizar.kilomentrosMes === '3'"
+            />
+            <label class="switch-label" for="kmMes003"
+              >NO SUELO <br />CONTAR KM</label
+            ><span class="switch-outside"></span
+            ><span class="switch-inside"></span>
+          </div>
+        </div>
+        <div class="switch-item">
+          <label class="switch-item__title"
+            ><strong
+              >¿Cuántas veces a la semana conduces después de las 00:00
+              hrs.?</strong
+            ></label
+          >
+          <div class="switch">
+            <input
+              class="switch-input"
+              id="after001"
+              name="after00"
+              value="1"
+              type="radio"
+              [(ngModel)]="formCotizar.semana"
+              [checked]="formCotizar.semana === '1'"
+            />
+            <label class="switch-label" for="after001">NUNCA</label>
+            <input
+              class="switch-input"
+              id="after002"
+              name="after00"
+              value="2"
+              type="radio"
+              [(ngModel)]="formCotizar.semana"
+              [checked]="formCotizar.semana === '2'"
+            />
+            <label class="switch-label" for="after002">SOLO EMERGENCIAS</label>
+            <input
+              class="switch-input"
+              id="after003"
+              name="after00"
+              value="3"
+              type="radio"
+              [(ngModel)]="formCotizar.semana"
+              [checked]="formCotizar.semana === '3'"
+            />
+            <label class="switch-label" for="after003">1-3 VECES</label>
+            <input
+              class="switch-input"
+              id="after004"
+              name="after00"
+              value="4"
+              type="radio"
+              [(ngModel)]="formCotizar.semana"
+              [checked]="formCotizar.semana === '4'"
+            />
+            <label class="switch-label" for="after004">MÁS DE 3 VECES</label
+            ><span class="switch-outside"></span
+            ><span class="switch-inside"></span>
+          </div>
+        </div>
+        <div class="switch-item">
+          <label class="switch-item__title"
+            ><strong>¿Cuánto deducible te gustaría pagar?</strong></label
+          >
+          <div class="switch">
+            <input
+              class="switch-input"
+              id="deducible1"
+              name="deducible"
+              value="1"
+              type="radio"
+              [(ngModel)]="formCotizar.deducible"
+              [checked]="formCotizar.deducible === '1'"
+            />
+            <label class="switch-label" for="deducible1">SIN DEDUCIBLE</label>
+            <input
+              class="switch-input"
+              id="deducible2"
+              name="deducible"
+              value="2"
+              type="radio"
+              [(ngModel)]="formCotizar.deducible"
+              [checked]="formCotizar.deducible === '2'"
+            />
+            <label class="switch-label" for="deducible2">UF 3</label>
+            <input
+              class="switch-input"
+              id="deducible3"
+              name="deducible"
+              value="3"
+              type="radio"
+              [(ngModel)]="formCotizar.deducible"
+              [checked]="formCotizar.deducible === '3'"
+            />
+            <label class="switch-label" for="deducible3">UF 5</label>
+            <input
+              class="switch-input"
+              id="deducible4"
+              name="deducible"
+              value="4"
+              type="radio"
+              [(ngModel)]="formCotizar.deducible"
+              [checked]="formCotizar.deducible === '4'"
+            />
+            <label class="switch-label" for="deducible4">UF 10</label
+            ><span class="switch-outside"></span
+            ><span class="switch-inside"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- <app-envia-datos></app-envia-datos> -->
+<div class="buttons-box">
+  <a class="bn bn-br-blue" href="#" onclick="window.history.back()">VOLVER</a>
+  <a (click)="onSubmit()" class="bn bn-yellow" href="#">VER MI MEJOR SEGURO</a>
+
+  <!-- <a (click)="obtenerToken()" class="bn bn-yellow" href="#">Obtener Token</a> -->
+  <!-- <a (click)="solicitarCotizacion()" class="bn bn-yellow" href="#">Solicitar cotizacion</a> -->
+</div>
+<div id="loader-main" *ngIf="loader">
+  <div id="loader"></div>
+</div>
